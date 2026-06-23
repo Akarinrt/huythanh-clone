@@ -16,10 +16,35 @@ export default function CheckoutPage() {
     setMounted(true)
   }, [])
 
-  const handleCheckout = (e: React.FormEvent) => {
+  const handleCheckout = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsSuccess(true)
-    clearCart()
+    const form = e.currentTarget
+    const customerName = (form.querySelector('input[type="text"]') as HTMLInputElement)?.value || ''
+    const phone = (form.querySelector('input[type="tel"]') as HTMLInputElement)?.value || ''
+    const address = (form.querySelectorAll('input[type="text"]')[1] as HTMLInputElement)?.value || ''
+
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName,
+          phone,
+          address,
+          totalPrice,
+          items
+        })
+      })
+
+      if (res.ok) {
+        setIsSuccess(true)
+        clearCart()
+      } else {
+        alert('Có lỗi khi đặt hàng, vui lòng thử lại.')
+      }
+    } catch {
+      alert('Lỗi kết nối, vui lòng thử lại.')
+    }
   }
 
   if (!mounted) return null
