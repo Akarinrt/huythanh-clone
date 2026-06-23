@@ -8,8 +8,13 @@ export const dynamic = 'force-dynamic'
 export default async function ProductPage({ params }: { params: { id: string } }) {
   const { id } = params
   
+  const productId = parseInt(id, 10)
+  if (isNaN(productId)) {
+    notFound()
+  }
+  
   const product = await prisma.product.findUnique({
-    where: { id }
+    where: { id: productId }
   })
 
   if (!product) {
@@ -25,6 +30,9 @@ export default async function ProductPage({ params }: { params: { id: string } }
     take: 4
   })
 
+  // Format products for client
+  const clientProduct = { ...product, id: product.id.toString() }
+
   return (
     <main style={{ minHeight: '60vh', padding: '2rem 0' }}>
       <div className="container">
@@ -38,7 +46,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
         </div>
 
         {/* Product Details (Client Component) */}
-        <ClientProductDetails product={product} />
+        <ClientProductDetails product={clientProduct} />
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
