@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "npx prisma db push && npx tsx prisma/seed.ts && next start",
     "lint": "eslint",
     "postinstall": "prisma generate"
   },
@@ -15,7 +15,8 @@
     "jose": "^6.2.3",
     "next": "16.2.9",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "tsx": "^4.22.4"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
