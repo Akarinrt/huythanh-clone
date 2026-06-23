@@ -45,3 +45,5 @@ next-env.d.ts
 # Database
 dev.db
 dev.db-journal
+
+package-lock.json
