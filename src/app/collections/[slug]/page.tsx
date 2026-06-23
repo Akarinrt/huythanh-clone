@@ -3,8 +3,8 @@ import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 
-export default async function CollectionPage({ params }: { params: { slug: string } }) {
-  const { slug } = params
+export default async function CollectionPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
   
   let title = 'Tất cả sản phẩm'
   

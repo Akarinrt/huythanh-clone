@@ -5,8 +5,8 @@ import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
-  const { id } = params
+export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   
   const productId = parseInt(id, 10)
   if (isNaN(productId)) {
