@@ -44,54 +44,53 @@ export default function ClientProductDetails({ product }: { product: Product }) 
       quantity,
       size: selectedSize
     })
-    // Navigate to checkout in a real app, for now just open cart
     openCart()
   }
 
   return (
-    <div className="product-details-container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', padding: '2rem 0' }}>
+    <div className="product-details-container pdetgrid">
       
       {/* Left: Images */}
-      <div className="product-images">
-        <div style={{ backgroundColor: '#f9f9f9', width: '100%', aspectRatio: '1/1', borderRadius: '8px', overflow: 'hidden' }}>
+      <div className="product-images" style={{ width: '100%' }}>
+        <div style={{ backgroundColor: 'var(--bg-section)', width: '100%', aspectRatio: '1/1', overflow: 'hidden' }}>
           {product.imageUrl ? (
             <img src={product.imageUrl} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           ) : (
-            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#aaa' }}>No Image</div>
+             <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-dim)' }}>Chưa có ảnh</div>
           )}
         </div>
       </div>
 
       {/* Right: Info */}
       <div className="product-info-panel">
-        <div style={{ fontSize: '0.85rem', color: '#666', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>
+        <div style={{ font: "600 11px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '3px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '14px' }}>
           {product.category || 'Trang Sức'}
         </div>
-        <h1 style={{ fontSize: '2rem', fontFamily: 'Playfair Display', marginBottom: '1rem', color: 'var(--dark-bg)' }}>
+        <h1 style={{ font: "300 42px/1.2 'Playfair Display',serif", color: 'var(--text)', marginBottom: '18px' }}>
           {product.title}
         </h1>
-        <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: 'var(--primary-gold)', marginBottom: '2rem' }}>
+        <div style={{ font: "600 24px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text)', marginBottom: '36px' }}>
           {product.price.toLocaleString('vi-VN')} đ
         </div>
 
         {/* Size Selection */}
-        <div style={{ marginBottom: '2rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.8rem' }}>
-            <span style={{ fontWeight: 600 }}>Kích thước:</span>
-            <button style={{ background: 'none', border: 'none', color: 'var(--primary-gold)', textDecoration: 'underline', cursor: 'pointer' }}>Hướng dẫn đo size</button>
+        <div style={{ marginBottom: '36px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
+            <span style={{ font: "500 13px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text)' }}>Kích thước:</span>
+            <button style={{ background: 'none', border: 'none', color: 'var(--gold)', font: "400 12px/1 'Be Vietnam Pro',sans-serif", textDecoration: 'underline', cursor: 'pointer' }}>Hướng dẫn đo size</button>
           </div>
-          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             {sizes.map(size => (
               <button
                 key={size}
+                className="szb"
+                data-active={selectedSize === size ? 'true' : 'false'}
                 onClick={() => setSelectedSize(size)}
                 style={{
-                  width: '40px', height: '40px',
-                  border: selectedSize === size ? '2px solid var(--primary-gold)' : '1px solid #ddd',
-                  background: selectedSize === size ? '#fffcf5' : 'white',
-                  color: selectedSize === size ? 'var(--primary-gold)' : '#333',
-                  borderRadius: '4px', cursor: 'pointer', fontWeight: selectedSize === size ? 'bold' : 'normal',
-                  transition: 'all 0.2s'
+                  width: '44px', height: '44px',
+                  border: '1px solid var(--border)',
+                  color: 'var(--text-muted)',
+                  font: "500 13px/1 'Be Vietnam Pro',sans-serif"
                 }}
               >
                 {size}
@@ -101,54 +100,48 @@ export default function ClientProductDetails({ product }: { product: Product }) 
         </div>
 
         {/* Action Buttons */}
-        <div style={{ display: 'flex', gap: '1rem', marginBottom: '3rem' }}>
+        <div style={{ display: 'flex', gap: '16px', marginBottom: '48px' }}>
           <button 
             onClick={handleAddToCart}
-            className="btn btn-outline" 
-            style={{ flex: 1, padding: '1rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}
+            className="btn-o" 
+            style={{ flex: 1, padding: '18px', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', font: "600 12px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '2px', textTransform: 'uppercase', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}
           >
             {isAdded ? <><Check size={18} /> Đã thêm</> : 'THÊM VÀO GIỎ'}
           </button>
           <button 
             onClick={handleBuyNow}
-            className="btn" 
-            style={{ flex: 1, padding: '1rem' }}
+            className="btn-g" 
+            style={{ flex: 1, padding: '18px', background: 'var(--gold)', color: '#FFF', font: "600 12px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '2px', textTransform: 'uppercase' }}
           >
             MUA NGAY
           </button>
         </div>
 
         {/* Promises */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', padding: '1.5rem', backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <Truck size={24} color="var(--primary-gold)" />
-            <span style={{ fontSize: '0.9rem' }}>Miễn phí giao hàng toàn quốc</span>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', padding: '24px', backgroundColor: 'var(--bg-section)', border: '1px solid var(--border)' }}>
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <Truck size={20} color="var(--gold)" />
+            <span style={{ font: "400 13px/1.5 'Be Vietnam Pro',sans-serif", color: 'var(--text-muted)' }}>Miễn phí giao hàng toàn quốc</span>
           </div>
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <Shield size={24} color="var(--primary-gold)" />
-            <span style={{ fontSize: '0.9rem' }}>Bảo hành trọn đời (làm mới, đánh bóng)</span>
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <Shield size={20} color="var(--gold)" />
+            <span style={{ font: "400 13px/1.5 'Be Vietnam Pro',sans-serif", color: 'var(--text-muted)' }}>Bảo hành trọn đời (làm mới, đánh bóng)</span>
           </div>
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <Info size={24} color="var(--primary-gold)" />
-            <span style={{ fontSize: '0.9rem' }}>Đổi trả trong vòng 7 ngày</span>
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <Info size={20} color="var(--gold)" />
+            <span style={{ font: "400 13px/1.5 'Be Vietnam Pro',sans-serif", color: 'var(--text-muted)' }}>Đổi trả trong vòng 7 ngày</span>
           </div>
         </div>
         
         {/* Description */}
-        <div style={{ marginTop: '3rem' }}>
-          <h3 style={{ borderBottom: '1px solid #eaeaea', paddingBottom: '1rem', marginBottom: '1rem', fontFamily: 'Outfit', fontWeight: 600 }}>
+        <div style={{ marginTop: '48px' }}>
+          <h3 style={{ borderBottom: '1px solid var(--border)', paddingBottom: '16px', marginBottom: '24px', font: "600 12px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--text)' }}>
             MÔ TẢ SẢN PHẨM
           </h3>
-          <div style={{ color: '#555', lineHeight: '1.6' }} dangerouslySetInnerHTML={{ __html: product.description || 'Chưa có mô tả cho sản phẩm này.' }} />
+          <div style={{ font: "400 14px/1.8 'Be Vietnam Pro',sans-serif", color: 'var(--text-muted)' }} dangerouslySetInnerHTML={{ __html: product.description || 'Chưa có mô tả cho sản phẩm này.' }} />
         </div>
 
       </div>
-
-      <style dangerouslySetInnerHTML={{__html: `
-        @media (max-width: 768px) {
-          .product-details-container { grid-template-columns: 1fr !important; }
-        }
-      `}} />
     </div>
   )
 }

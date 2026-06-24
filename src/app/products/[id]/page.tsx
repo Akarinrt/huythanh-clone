@@ -35,7 +35,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
   return (
     <main style={{ minHeight: '60vh', padding: '2rem 0' }}>
-      <div className="container">
+      <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 48px' }}>
         {/* Breadcrumb */}
         <div style={{ fontSize: '0.9rem', color: '#666', marginBottom: '2rem' }}>
           <Link href="/">Trang chủ</Link>
