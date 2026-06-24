@@ -43,7 +43,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2026 Bảo Nhiên - Luxury Jewelry & Platinum. Bản quyền được bảo lưu.</p>
+          <p>© 2026 Bảo Thanh. Bản quyền được bảo lưu.</p>
         </div>
       </div>
     </footer>
