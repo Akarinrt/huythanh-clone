@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Package, ShoppingCart, Home, Users } from 'lucide-react'
+import LogoutButton from '@/components/admin/LogoutButton'
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -26,10 +27,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </Link>
         </nav>
 
-        <div style={{ paddingTop: '24px', borderTop: '1px solid var(--border)' }}>
+        <div style={{ paddingTop: '24px', borderTop: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold)', textDecoration: 'none', padding: '12px', font: "500 12px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '1px' }}>
             ← Quay lại Cửa hàng
           </Link>
+          <LogoutButton />
         </div>
       </aside>
 
