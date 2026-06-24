@@ -51,14 +51,14 @@ export default function CheckoutPage() {
 
   if (isSuccess) {
     return (
-      <main style={{ minHeight: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-        <div style={{ textAlign: 'center', maxWidth: '500px', backgroundColor: '#f9f9f9', padding: '3rem', borderRadius: '8px' }}>
-          <CheckCircle size={64} color="#4caf50" style={{ margin: '0 auto 1.5rem' }} />
-          <h1 style={{ fontSize: '2rem', fontFamily: 'Playfair Display', marginBottom: '1rem' }}>Đặt hàng thành công!</h1>
-          <p style={{ color: '#666', marginBottom: '2rem', lineHeight: '1.6' }}>
+      <main style={{ minHeight: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem', background: 'var(--bg)' }}>
+        <div style={{ textAlign: 'center', maxWidth: '560px', backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)', padding: '48px', borderRadius: '8px', boxShadow: 'var(--shadow)' }}>
+          <CheckCircle size={72} color="var(--gold)" style={{ margin: '0 auto 24px' }} />
+          <h1 style={{ font: "300 36px/1.2 'Playfair Display',serif", color: 'var(--text)', marginBottom: '16px' }}>Đặt hàng thành công!</h1>
+          <p style={{ font: "400 15px/1.8 'Be Vietnam Pro',sans-serif", color: 'var(--text-muted)', marginBottom: '36px' }}>
             Cảm ơn bạn đã mua sắm tại Bảo Nhiên. Đơn hàng của bạn đang được xử lý và chúng tôi sẽ liên hệ trong thời gian sớm nhất.
           </p>
-          <Link href="/" className="btn">Tiếp tục mua sắm</Link>
+          <Link href="/" className="btn-g" style={{ display: 'inline-block', padding: '16px 40px', background: 'var(--gold)', color: '#FFF', font: "600 12px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '2px', textTransform: 'uppercase' }}>Tiếp tục mua sắm</Link>
         </div>
       </main>
     )
@@ -66,70 +66,78 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <main style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <main style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)' }}>
         <div style={{ textAlign: 'center' }}>
-          <h2 style={{ marginBottom: '1rem' }}>Giỏ hàng trống</h2>
-          <Link href="/" className="btn btn-outline">Quay lại mua sắm</Link>
+          <h2 style={{ font: "300 32px/1.2 'Playfair Display',serif", color: 'var(--text)', marginBottom: '24px' }}>Giỏ hàng trống</h2>
+          <Link href="/" className="btn-o" style={{ display: 'inline-block', padding: '16px 40px', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', font: "600 12px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '2px', textTransform: 'uppercase' }}>Quay lại mua sắm</Link>
         </div>
       </main>
     )
   }
 
   return (
-    <main style={{ minHeight: '60vh', padding: '4rem 1rem' }}>
-      <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '4rem' }}>
+    <main style={{ minHeight: '80vh', padding: '80px 0', background: 'var(--bg)' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 48px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '64px' }}>
         
         {/* Form */}
         <div>
-          <h2 style={{ fontFamily: 'Playfair Display', marginBottom: '2rem', fontSize: '1.8rem' }}>Thông tin giao hàng</h2>
-          <form onSubmit={handleCheckout} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <h2 style={{ font: "300 32px/1.2 'Playfair Display',serif", color: 'var(--text)', marginBottom: '32px' }}>Thông tin giao hàng</h2>
+          <form onSubmit={handleCheckout} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Họ và tên</label>
-              <input required type="text" style={{ width: '100%', padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }} placeholder="Nhập họ và tên..." />
+              <label style={{ display: 'block', marginBottom: '8px', font: "500 13px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text)' }}>Họ và tên</label>
+              <input required type="text" style={{ width: '100%', padding: '16px', background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text)', font: "400 14px/1 'Be Vietnam Pro',sans-serif", outline: 'none' }} placeholder="Nhập họ và tên..." />
             </div>
             <div>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Số điện thoại</label>
-              <input required type="tel" style={{ width: '100%', padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }} placeholder="Nhập số điện thoại..." />
+              <label style={{ display: 'block', marginBottom: '8px', font: "500 13px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text)' }}>Số điện thoại</label>
+              <input required type="tel" style={{ width: '100%', padding: '16px', background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text)', font: "400 14px/1 'Be Vietnam Pro',sans-serif", outline: 'none' }} placeholder="Nhập số điện thoại..." />
             </div>
             <div>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem' }}>Địa chỉ nhận hàng</label>
-              <input required type="text" style={{ width: '100%', padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }} placeholder="Nhập địa chỉ chi tiết..." />
+              <label style={{ display: 'block', marginBottom: '8px', font: "500 13px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text)' }}>Địa chỉ nhận hàng</label>
+              <input required type="text" style={{ width: '100%', padding: '16px', background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text)', font: "400 14px/1 'Be Vietnam Pro',sans-serif", outline: 'none' }} placeholder="Nhập địa chỉ chi tiết..." />
             </div>
-            <div style={{ marginTop: '1rem' }}>
-              <button type="submit" className="btn" style={{ width: '100%', padding: '1rem', fontSize: '1.1rem' }}>Xác nhận đặt hàng</button>
+            <div style={{ marginTop: '16px' }}>
+              <button type="submit" className="btn-g" style={{ width: '100%', padding: '20px', background: 'var(--gold)', color: '#FFF', font: "600 13px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '2px', textTransform: 'uppercase', border: 'none' }}>
+                Xác nhận đặt hàng
+              </button>
             </div>
           </form>
         </div>
 
         {/* Order Summary */}
-        <div style={{ backgroundColor: '#f9f9f9', padding: '2rem', borderRadius: '8px', height: 'fit-content' }}>
-          <h2 style={{ fontFamily: 'Playfair Display', marginBottom: '2rem', fontSize: '1.5rem', borderBottom: '1px solid #ddd', paddingBottom: '1rem' }}>Đơn hàng của bạn</h2>
+        <div style={{ backgroundColor: 'var(--bg-section)', padding: '40px', border: '1px solid var(--border)', height: 'fit-content' }}>
+          <h2 style={{ font: "300 24px/1.2 'Playfair Display',serif", color: 'var(--text)', marginBottom: '32px', borderBottom: '1px solid var(--border)', paddingBottom: '20px' }}>Đơn hàng của bạn</h2>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginBottom: '32px' }}>
             {items.map(item => (
               <div key={`${item.id}-${item.size}`} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                   <div style={{ position: 'relative' }}>
-                    <div style={{ width: '60px', height: '60px', backgroundColor: '#eee', borderRadius: '4px', overflow: 'hidden' }}>
-                      {item.imageUrl && <img src={item.imageUrl} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+                    <div style={{ width: '72px', height: '72px', backgroundColor: 'var(--bg-card)', overflow: 'hidden', border: '1px solid var(--border)' }}>
+                      {item.imageUrl ? (
+                        <img src={item.imageUrl} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-dim)', font: "400 10px/1 'Be Vietnam Pro',sans-serif" }}>No Image</div>
+                      )}
                     </div>
-                    <span style={{ position: 'absolute', top: '-5px', right: '-5px', background: '#666', color: 'white', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem' }}>{item.quantity}</span>
+                    <span style={{ position: 'absolute', top: '-8px', right: '-8px', background: 'var(--text-muted)', color: '#FFF', borderRadius: '50%', width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center', font: "600 11px/1 'Be Vietnam Pro',sans-serif", border: '2px solid var(--bg-section)' }}>
+                      {item.quantity}
+                    </span>
                   </div>
                   <div>
-                    <div style={{ fontWeight: 500, fontSize: '0.9rem' }}>{item.title}</div>
-                    {item.size && <div style={{ fontSize: '0.8rem', color: '#666' }}>Size: {item.size}</div>}
+                    <div style={{ font: "400 15px/1.4 'Playfair Display',serif", color: 'var(--text)', marginBottom: '4px' }}>{item.title}</div>
+                    {item.size && <div style={{ font: "400 12px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text-muted)' }}>Size: {item.size}</div>}
                   </div>
                 </div>
-                <div style={{ fontWeight: 600 }}>
+                <div style={{ font: "600 15px/1 'Be Vietnam Pro',sans-serif", color: 'var(--gold)' }}>
                   {(item.price * item.quantity).toLocaleString('vi-VN')} đ
                 </div>
               </div>
             ))}
           </div>
 
-          <div style={{ borderTop: '1px solid #ddd', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', fontSize: '1.2rem', fontWeight: 'bold' }}>
-            <span>Tổng cộng</span>
-            <span style={{ color: 'var(--primary-gold)' }}>{totalPrice.toLocaleString('vi-VN')} đ</span>
+          <div style={{ borderTop: '1px solid var(--border)', paddingTop: '28px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ font: "500 14px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text)', textTransform: 'uppercase', letterSpacing: '2px' }}>Tổng cộng</span>
+            <span style={{ font: "600 20px/1 'Be Vietnam Pro',sans-serif", color: 'var(--gold)' }}>{totalPrice.toLocaleString('vi-VN')} đ</span>
           </div>
         </div>
 
