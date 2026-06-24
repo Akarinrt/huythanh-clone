@@ -66,7 +66,7 @@ export default function Header() {
           {/* CENTER — Logo */}
           <Link href="/" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <img
-              src="/logo.png"
+              src="/logo.jpg"
               alt="Bảo Nhiên Jewelry"
               style={{ height: '64px', width: 'auto', objectFit: 'contain' }}
             />
@@ -120,7 +120,7 @@ export default function Header() {
               <X size={24} />
             </button>
             <Link href="/" style={{ display: 'flex', marginBottom: '2rem' }}>
-              <img src="/logo.png" alt="Bảo Nhiên" style={{ height: '60px', width: 'auto' }} />
+              <img src="/logo.jpg" alt="Bảo Nhiên" style={{ height: '60px', width: 'auto' }} />
             </Link>
             <nav style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', fontSize: '1rem' }}>
               <Link href="/">Trang chủ</Link>

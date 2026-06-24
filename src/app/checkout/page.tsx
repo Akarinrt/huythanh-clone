@@ -56,7 +56,7 @@ export default function CheckoutPage() {
           <CheckCircle size={64} color="#4caf50" style={{ margin: '0 auto 1.5rem' }} />
           <h1 style={{ fontSize: '2rem', fontFamily: 'Playfair Display', marginBottom: '1rem' }}>Đặt hàng thành công!</h1>
           <p style={{ color: '#666', marginBottom: '2rem', lineHeight: '1.6' }}>
-            Cảm ơn bạn đã mua sắm tại Huy Thanh Clone. Đơn hàng của bạn đang được xử lý và chúng tôi sẽ liên hệ trong thời gian sớm nhất.
+            Cảm ơn bạn đã mua sắm tại Bảo Nhiên. Đơn hàng của bạn đang được xử lý và chúng tôi sẽ liên hệ trong thời gian sớm nhất.
           </p>
           <Link href="/" className="btn">Tiếp tục mua sắm</Link>
         </div>
