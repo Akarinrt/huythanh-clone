@@ -7,65 +7,134 @@ export default async function Home() {
 
   try {
     const { prisma } = await import('@/lib/prisma')
-    products = await prisma.product.findMany({
-      orderBy: { createdAt: 'desc' },
-      take: 8
-    })
-  } catch (err) {
-    console.error('Database not connected:', err)
-    // Gracefully show empty state if DB is not ready
+    products = await prisma.product.findMany({ orderBy: { createdAt: 'desc' }, take: 8 })
+  } catch {
+    // DB not ready yet
   }
 
   return (
-    <main>
-      {/* Hero Banner */}
-      <section style={{ height: '70vh', background: 'url("https://cdn.huythanhjewelry.vn/storage/photos/shares/article/Banner%20website%202026/body%20homepage%20-%20ndino.jpg") center/cover no-repeat', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.2)' }}></div>
-        <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', color: 'white', padding: '0 1rem' }}>
-          <h1 style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', textShadow: '2px 2px 4px rgba(0,0,0,0.3)', marginBottom: '1rem', letterSpacing: '2px' }}>Tinh Hoa Trang Sức</h1>
-          <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.2rem)', marginBottom: '2rem', textTransform: 'uppercase', letterSpacing: '3px' }}>Tôn vinh vẻ đẹp thuần khiết</p>
-          <Link href="/collections/all" className="btn">Khám phá ngay</Link>
+    <main style={{ background: '#0C0B09', minHeight: '100vh' }}>
+
+      {/* ── HERO ── */}
+      <section style={{ height: '100vh', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('https://cdn.huythanhjewelry.vn/storage/photos/shares/article/Banner%20website%202026/body%20homepage%20-%20ndino.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#1A1612' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(12,11,9,0.84) 0%, rgba(12,11,9,0.5) 50%, rgba(12,11,9,0.88) 100%)' }} />
+        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', maxWidth: '840px' }}>
+          <div style={{ font: "500 10px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '7px', textTransform: 'uppercase', color: '#C4924C', marginBottom: '30px', animation: 'fadeUp 0.8s 0.2s both' }}>── Tinh Hoa Trang Sức ──</div>
+          <div style={{ font: "300 italic 84px/1.05 'Playfair Display',serif", color: '#EDE8DF', animation: 'fadeUp 0.9s 0.4s both' }}>Vẻ Đẹp</div>
+          <span className="shimmer-gold" style={{ font: "400 92px/1.05 'Playfair Display',serif", marginBottom: '30px', animation: 'fadeUp 0.9s 0.55s both' }}>Vĩnh Cửu</span>
+          <p style={{ font: "300 15px/1.9 'Be Vietnam Pro',sans-serif", color: 'rgba(237,232,223,0.52)', maxWidth: '460px', margin: '0 auto 52px', letterSpacing: '0.4px', animation: 'fadeUp 0.8s 0.7s both' }}>
+            Mỗi trang sức là một câu chuyện về tình yêu và nghệ thuật, được chế tác bởi những nghệ nhân tài hoa nhất.
+          </p>
+          <Link href="/collections/all" className="btn-o" style={{ background: 'transparent', border: '1px solid rgba(196,146,76,0.42)', color: '#C4924C', font: "500 11px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '4.5px', textTransform: 'uppercase', padding: '20px 62px', animation: 'fadeUp 0.8s 0.85s both', display: 'inline-block' }}>
+            Khám Phá Bộ Sưu Tập
+          </Link>
+        </div>
+        <div style={{ position: 'absolute', bottom: '40px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', animation: 'fadeIn 2s 1.3s both' }}>
+          <div style={{ font: "400 9px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '3px', textTransform: 'uppercase', color: 'rgba(196,146,76,0.4)' }}>Scroll</div>
+          <div style={{ width: '1px', height: '44px', background: 'linear-gradient(to bottom, rgba(196,146,76,0.45), transparent)' }} />
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="container" style={{ padding: '5rem 1rem' }}>
-        <div className="section-title">
-          <h2>Sản Phẩm Mới Nhất</h2>
+      {/* ── FEATURED PRODUCTS ── */}
+      <section style={{ background: '#0C0B09', padding: '112px 0 104px' }}>
+        <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 48px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '68px' }}>
+            <div style={{ font: "500 10px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '5px', textTransform: 'uppercase', color: '#C4924C', marginBottom: '18px' }}>Bộ Sưu Tập</div>
+            <h2 style={{ font: "300 56px/1.12 'Playfair Display',serif", color: '#EDE8DF' }}>Sản Phẩm Nổi Bật</h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '18px', justifyContent: 'center', marginTop: '22px' }}>
+              <div style={{ width: '56px', height: '1px', background: 'rgba(196,146,76,0.32)' }} />
+              <div style={{ font: "400 10px/1 'Be Vietnam Pro',sans-serif", color: '#C4924C' }}>◆</div>
+              <div style={{ width: '56px', height: '1px', background: 'rgba(196,146,76,0.32)' }} />
+            </div>
+          </div>
+
+          {products.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '4rem', color: '#706B65' }}>
+              <p style={{ font: "300 16px/1 'Playfair Display',serif", marginBottom: '1.5rem' }}>Chưa có sản phẩm nào</p>
+              <Link href="/admin" className="btn-o" style={{ display: 'inline-block', background: 'transparent', border: '1px solid rgba(196,146,76,0.26)', color: '#C4924C', font: "500 11px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '3px', textTransform: 'uppercase', padding: '14px 32px' }}>Vào Admin</Link>
+            </div>
+          ) : (
+            <div className="pgrid">
+              {products.map(product => (
+                <Link href={`/products/${product.id}`} key={product.id} className="pcard" style={{ display: 'block', background: '#141311', border: '1px solid rgba(196,146,76,0.13)', overflow: 'hidden' }}>
+                  <div style={{ aspectRatio: '1/1', overflow: 'hidden', background: '#1A1916', position: 'relative' }}>
+                    {product.imageUrl
+                      ? <img className="pimg" src={product.imageUrl} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                      : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3a3733', font: "300 12px/1 'Be Vietnam Pro',sans-serif" }}>Chưa có ảnh</div>
+                    }
+                    <div className="poverlay" style={{ position: 'absolute', inset: 0, background: 'rgba(10,9,8,0.62)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <span style={{ font: "500 10px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '3px', textTransform: 'uppercase', color: '#E8D4A8', border: '1px solid rgba(232,212,168,0.42)', padding: '13px 26px' }}>Xem Chi Tiết</span>
+                    </div>
+                  </div>
+                  <div style={{ padding: '22px 20px 26px' }}>
+                    <div style={{ font: "500 9px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '3px', textTransform: 'uppercase', color: '#C4924C', marginBottom: '12px' }}>{product.category || 'Trang Sức'}</div>
+                    <h3 className="clamp2" style={{ font: "400 20px/1.38 'Playfair Display',serif", color: '#EDE8DF', marginBottom: '13px', height: '54px' }}>{product.title}</h3>
+                    <div style={{ font: "500 15px/1 'Be Vietnam Pro',sans-serif", color: '#C4924C' }}>{product.price.toLocaleString('vi-VN')} đ</div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {products.length > 0 && (
+            <div style={{ textAlign: 'center', marginTop: '60px' }}>
+              <Link href="/collections/all" className="btn-o" style={{ display: 'inline-block', background: 'transparent', border: '1px solid rgba(196,146,76,0.26)', color: '#C4924C', font: "500 11px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '4px', textTransform: 'uppercase', padding: '17px 52px' }}>Xem Tất Cả Sản Phẩm</Link>
+            </div>
+          )}
         </div>
-
-        {products.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '3rem', color: '#888' }}>
-            <p style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Chưa có sản phẩm nào.</p>
-            <Link href="/admin" className="btn btn-outline">Vào Admin để thêm sản phẩm</Link>
-          </div>
-        ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '2.5rem' }}>
-            {products.map(product => (
-              <Link href={`/products/${product.id}`} key={product.id} className="product-card" style={{ display: 'block' }}>
-                <div className="product-image-container">
-                  {product.imageUrl ? (
-                    <img src={product.imageUrl} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  ) : (
-                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#aaa', background: '#f5f5f5' }}>Chưa có ảnh</div>
-                  )}
-                </div>
-                <div className="product-info">
-                  <p className="product-category">{product.category || 'Trang Sức'}</p>
-                  <h3 className="product-title">{product.title}</h3>
-                  <p className="product-price">{product.price.toLocaleString('vi-VN')} đ</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-
-        {products.length > 0 && (
-          <div style={{ textAlign: 'center', marginTop: '4rem' }}>
-            <Link href="/collections/all" className="btn btn-outline">Xem tất cả sản phẩm</Link>
-          </div>
-        )}
       </section>
+
+      {/* ── CATEGORY TILES ── */}
+      <section style={{ background: '#0A0908' }}>
+        <div className="catgrid">
+          {[
+            { href: '/collections/nhan-cau-hon', img: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=900&q=80', label: 'Nhẫn & Nhẫn\nCầu Hôn' },
+            { href: '/collections/trang-suc-cuoi', img: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=900&q=80', label: 'Dây Chuyền\n& Vòng Cổ' },
+            { href: '/collections/vang-24k', img: 'https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=900&q=80', label: 'Trang Sức\nCưới' },
+          ].map((cat, i) => (
+            <Link href={cat.href} key={i} className="cattile" style={{ height: '580px', borderRight: i < 2 ? '1px solid rgba(196,146,76,0.07)' : 'none', display: 'block' }}>
+              <div className="catimg" style={{ backgroundImage: `url('${cat.img}')`, backgroundColor: '#1A1612' }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,9,8,0.93) 0%, rgba(10,9,8,0.12) 60%)' }} />
+              <div style={{ position: 'absolute', bottom: '52px', left: 0, right: 0, textAlign: 'center', padding: '0 28px' }}>
+                <div className="catlabel" style={{ font: "500 9px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '4px', textTransform: 'uppercase', color: '#C4924C', marginBottom: '14px' }}>Khám Phá →</div>
+                <div className="catline" style={{ height: '1px', background: '#C4924C', margin: '0 auto 18px', opacity: 0.65 }} />
+                <div className="catname" style={{ font: "300 38px/1.22 'Playfair Display',serif", color: '#EDE8DF', whiteSpace: 'pre-line' }}>{cat.label}</div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ── BRAND PROMISE ── */}
+      <section style={{ background: '#0C0B09', borderTop: '1px solid rgba(196,146,76,0.08)', borderBottom: '1px solid rgba(196,146,76,0.08)' }}>
+        <div className="promgrid" style={{ maxWidth: '1440px', margin: '0 auto' }}>
+          {[
+            {
+              icon: <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1" style={{ width: '100%', height: '100%' }}><polygon points="24,3 45,19 24,45 3,19"/><polyline points="3,19 13,3 35,3 45,19"/><line x1="13" y1="3" x2="24" y2="45"/><line x1="35" y1="3" x2="24" y2="45"/></svg>,
+              title: 'Kim Cương Thật 100%',
+              desc: 'Toàn bộ kim cương đều có giấy chứng nhận GIA chính hãng'
+            },
+            {
+              icon: <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1" style={{ width: '100%', height: '100%' }}><path d="M24 4L6 14v14c0 10.5 7 18.5 18 22 11-3.5 18-11.5 18-22V14L24 4z"/><polyline points="16,26 22,32 34,20"/></svg>,
+              title: 'Bảo Hành Trọn Đời',
+              desc: 'Miễn phí làm mới, đánh bóng và kiểm tra định kỳ mãi mãi'
+            },
+            {
+              icon: <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1" style={{ width: '100%', height: '100%' }}><rect x="2" y="20" width="44" height="26" rx="2"/><polyline points="2,20 24,6 46,20"/><line x1="24" y1="6" x2="24" y2="46"/><line x1="2" y1="33" x2="46" y2="33"/></svg>,
+              title: 'Giao Hàng Miễn Phí',
+              desc: 'Miễn phí vận chuyển toàn quốc, đóng gói sang trọng'
+            }
+          ].map((p, i) => (
+            <div key={i} className="promise-wrap" style={{ textAlign: 'center', padding: '76px 52px', borderRight: i < 2 ? '1px solid rgba(196,146,76,0.08)' : 'none' }}>
+              <div className="promise-icon" style={{ width: '48px', height: '48px', margin: '0 auto 28px', color: '#C4924C' }}>{p.icon}</div>
+              <div style={{ font: "500 10px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '4px', textTransform: 'uppercase', color: '#C4924C', marginBottom: '14px' }}>{p.title}</div>
+              <div style={{ font: "300 14px/1.78 'Be Vietnam Pro',sans-serif", color: '#C0BCB4', maxWidth: '210px', margin: '0 auto' }}>{p.desc}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
     </main>
   )
 }

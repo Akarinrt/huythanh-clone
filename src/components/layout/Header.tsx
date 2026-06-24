@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ShoppingBag, Search, User, Menu, X } from 'lucide-react'
+import { ShoppingBag, Search, Menu, X } from 'lucide-react'
 import { useCartStore } from '@/lib/store'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
@@ -9,99 +9,81 @@ import { usePathname } from 'next/navigation'
 export default function Header() {
   const { items, openCart } = useCartStore()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
 
-  useEffect(() => {
-    setIsMobileMenuOpen(false)
-  }, [pathname])
+  useEffect(() => { setIsMobileMenuOpen(false) }, [pathname])
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 40)
+    const handleScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const navStyle = {
+    font: "400 11px/1 'Be Vietnam Pro',sans-serif",
+    letterSpacing: '2.5px',
+    textTransform: 'uppercase' as const,
+    color: '#EDE8DF',
+  }
+
   return (
     <>
-      {/* Top bar */}
-      <div className="top-bar">
-        Miễn phí giao hàng toàn quốc cho đơn hàng từ 1.000.000đ
+      {/* Top Bar */}
+      <div style={{ background: '#0F0E0B', borderBottom: '1px solid rgba(196,146,76,0.07)', padding: '10px 0', textAlign: 'center' }}>
+        <span style={{ font: "500 10px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '4px', textTransform: 'uppercase', color: 'rgba(196,146,76,0.7)' }}>
+          Miễn phí giao hàng toàn quốc cho đơn hàng từ 1.000.000đ
+        </span>
       </div>
 
       {/* Main Header */}
-      <header style={{
-        position: 'sticky', top: 0, zIndex: 100, background: 'white',
-        transition: 'box-shadow 0.3s',
-        boxShadow: isScrolled ? '0 2px 10px rgba(0,0,0,0.1)' : '0 1px 0 var(--border-color)',
-      }}>
-        <div className="container" style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr auto 1fr',
-          alignItems: 'center',
-          padding: '0.6rem 1rem',
-          gap: '1rem',
-        }}>
+      <header
+        data-scrolled={scrolled ? 'true' : 'false'}
+        style={{ position: 'sticky', top: 0, left: 0, right: 0, zIndex: 200, transition: 'background 0.5s, border-color 0.5s', background: scrolled ? 'rgba(10,9,8,0.97)' : '#0F0E0B', borderBottom: '1px solid rgba(196,146,76,0.07)' }}
+      >
+        <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 48px', display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', height: '76px' }}>
 
-          {/* LEFT — Mobile toggle / Logo text spacer */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <button
-              className="mobile-toggle"
-              style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer' }}
-              onClick={() => setIsMobileMenuOpen(true)}
-            >
-              <Menu size={24} />
+          {/* LEFT NAV */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '36px' }}>
+            {/* Mobile hamburger */}
+            <button className="mob-btn icnb" onClick={() => setIsMobileMenuOpen(true)} style={{ display: 'none', color: '#EDE8DF', padding: '0', alignItems: 'center' }}>
+              <Menu size={22} />
             </button>
-
-            {/* Desktop nav - left side */}
-            <nav className="desktop-nav" style={{ display: 'flex', gap: '1.8rem', fontSize: '0.82rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '1px' }}>
-              <Link href="/" style={{ color: pathname === '/' ? 'var(--primary-gold)' : 'inherit' }}>Trang chủ</Link>
-              <Link href="/collections/all" style={{ color: pathname.includes('/collections') ? 'var(--primary-gold)' : 'inherit' }}>Sản phẩm</Link>
-              <Link href="/collections/nhan-cau-hon">Nhẫn Cầu Hôn</Link>
+            <nav className="dsk-nav" style={{ display: 'flex', gap: '36px', alignItems: 'center' }}>
+              <Link href="/" className="nav-lnk" data-active={pathname === '/' ? 'true' : 'false'} style={navStyle}>Trang Chủ</Link>
+              <Link href="/collections/all" className="nav-lnk" data-active={pathname.includes('/collections') ? 'true' : 'false'} style={navStyle}>Sản Phẩm</Link>
+              <Link href="/collections/nhan-cau-hon" className="nav-lnk" style={navStyle}>Nhẫn Cầu Hôn</Link>
             </nav>
           </div>
 
-          {/* CENTER — Logo */}
+          {/* CENTER LOGO */}
           <Link href="/" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <img
               src="/logo.jpg"
               alt="Bảo Nhiên Jewelry"
-              style={{ height: '64px', width: 'auto', objectFit: 'contain' }}
+              style={{ height: '56px', width: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.92, transition: 'opacity 0.3s' }}
+              onMouseOver={(e) => (e.currentTarget.style.opacity = '1')}
+              onMouseOut={(e) => (e.currentTarget.style.opacity = '0.92')}
             />
           </Link>
 
-          {/* RIGHT — More nav + Actions */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '1.8rem' }}>
-            {/* Desktop nav - right side */}
-            <nav className="desktop-nav" style={{ display: 'flex', gap: '1.8rem', fontSize: '0.82rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '1px' }}>
-              <Link href="/collections/trang-suc-cuoi">Trang Sức Cưới</Link>
-              <Link href="/collections/vang-24k">Vàng 24K</Link>
+          {/* RIGHT NAV + ICONS */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '32px' }}>
+            <nav className="dsk-nav" style={{ display: 'flex', gap: '36px', alignItems: 'center' }}>
+              <Link href="/collections/trang-suc-cuoi" className="nav-lnk" style={navStyle}>Trang Sức Cưới</Link>
+              <Link href="/collections/vang-24k" className="nav-lnk" style={navStyle}>Vàng 24K</Link>
             </nav>
 
-            {/* Icons */}
-            <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'center' }}>
-              <button style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex' }} aria-label="Tìm kiếm">
-                <Search size={20} />
+            <div style={{ display: 'flex', gap: '22px', alignItems: 'center' }}>
+              <button className="icnb" style={{ color: '#EDE8DF', padding: '0', display: 'flex', alignItems: 'center' }} aria-label="Tìm kiếm">
+                <Search size={18} />
               </button>
-              <Link href="/admin" aria-label="Tài khoản" style={{ display: 'flex' }}>
-                <User size={20} />
-              </Link>
-              <button
-                onClick={openCart}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', position: 'relative', display: 'flex' }}
-                aria-label="Giỏ hàng"
-              >
-                <ShoppingBag size={20} />
+              <button className="icnb" onClick={openCart} style={{ color: '#EDE8DF', padding: '0', display: 'flex', alignItems: 'center', position: 'relative' }} aria-label="Giỏ hàng">
+                <ShoppingBag size={18} />
                 {totalItems > 0 && (
-                  <span style={{
-                    position: 'absolute', top: '-7px', right: '-7px',
-                    background: 'var(--primary-gold)', color: 'white',
-                    fontSize: '0.65rem', width: '17px', height: '17px',
-                    borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontWeight: 'bold'
-                  }}>
+                  <span style={{ position: 'absolute', top: '-7px', right: '-7px', background: '#C4924C', color: '#0C0B09', font: "700 9px/1 'Be Vietnam Pro',sans-serif", width: '17px', height: '17px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     {totalItems}
                   </span>
                 )}
@@ -113,34 +95,39 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'flex' }}>
-          <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)' }} onClick={() => setIsMobileMenuOpen(false)} />
-          <div style={{ position: 'relative', width: '80%', maxWidth: '300px', height: '100%', backgroundColor: 'white', padding: '2rem 1.5rem', display: 'flex', flexDirection: 'column' }}>
-            <button onClick={() => setIsMobileMenuOpen(false)} style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'none', border: 'none', cursor: 'pointer' }}>
-              <X size={24} />
-            </button>
-            <Link href="/" style={{ display: 'flex', marginBottom: '2rem' }}>
-              <img src="/logo.jpg" alt="Bảo Nhiên" style={{ height: '60px', width: 'auto' }} />
-            </Link>
-            <nav style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', fontSize: '1rem' }}>
-              <Link href="/">Trang chủ</Link>
-              <Link href="/collections/all">Tất cả Sản phẩm</Link>
-              <Link href="/collections/nhan-cau-hon">Nhẫn Cầu Hôn</Link>
-              <Link href="/collections/trang-suc-cuoi">Trang Sức Cưới</Link>
-              <Link href="/collections/vang-24k">Vàng 24K</Link>
-              <hr style={{ border: 'none', borderTop: '1px solid #eaeaea' }} />
-              <Link href="/admin" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <User size={18} /> Admin
-              </Link>
+        <>
+          <div onClick={() => setIsMobileMenuOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', zIndex: 300, animation: 'fadeIn 0.3s both' }} />
+          <div style={{ position: 'fixed', top: 0, left: 0, bottom: 0, width: '80%', maxWidth: '320px', background: '#0F0E0B', zIndex: 400, display: 'flex', flexDirection: 'column', animation: 'menuSlide 0.35s cubic-bezier(0.25,0.1,0.25,1) both', borderRight: '1px solid rgba(196,146,76,0.1)', padding: '2rem 1.5rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+              <img src="/logo.jpg" alt="Bảo Nhiên" style={{ height: '48px', width: 'auto', filter: 'brightness(0) invert(1)', opacity: 0.9 }} />
+              <button className="icnb" onClick={() => setIsMobileMenuOpen(false)} style={{ color: '#EDE8DF', padding: '4px', display: 'flex' }}>
+                <X size={22} />
+              </button>
+            </div>
+            <nav style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              {[
+                { href: '/', label: 'Trang Chủ' },
+                { href: '/collections/all', label: 'Tất Cả Sản Phẩm' },
+                { href: '/collections/nhan-cau-hon', label: 'Nhẫn Cầu Hôn' },
+                { href: '/collections/trang-suc-cuoi', label: 'Trang Sức Cưới' },
+                { href: '/collections/vang-24k', label: 'Vàng 24K' },
+              ].map(link => (
+                <Link key={link.href} href={link.href} className="mmenu-link" style={{ font: "400 11px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '2.5px', textTransform: 'uppercase', color: '#EDE8DF', paddingLeft: '0', transition: 'color 0.2s, padding-left 0.2s' }}>
+                  {link.label}
+                </Link>
+              ))}
+              <div style={{ height: '1px', background: 'rgba(196,146,76,0.1)', margin: '0.5rem 0' }} />
+              <Link href="/admin" style={{ font: "400 11px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '2.5px', textTransform: 'uppercase', color: '#706B65' }}>Admin</Link>
             </nav>
           </div>
-        </div>
+        </>
       )}
 
       <style dangerouslySetInnerHTML={{__html: `
         @media (max-width: 900px) {
-          .desktop-nav { display: none !important; }
-          .mobile-toggle { display: flex !important; }
+          .dsk-nav { display: none !important; }
+          .mob-btn { display: flex !important; }
+          header > div { padding: 0 20px !important; }
         }
       `}} />
     </>
