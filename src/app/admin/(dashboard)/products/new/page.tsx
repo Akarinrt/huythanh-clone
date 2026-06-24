@@ -2,11 +2,17 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import dynamic from 'next/dynamic'
+import 'react-quill/dist/quill.snow.css'
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
+
+const PREDEFINED_CATEGORIES = ['Nhẫn', 'Dây Chuyền', 'Bông Tai', 'Vòng Tay', 'Trang Sức Cưới']
 
 export default function NewProductPage() {
   const [title, setTitle] = useState('')
   const [price, setPrice] = useState('')
-  const [category, setCategory] = useState('')
+  const [category, setCategory] = useState(PREDEFINED_CATEGORIES[0])
   const [imageUrl, setImageUrl] = useState('')
   const [description, setDescription] = useState('')
   const [isUploading, setIsUploading] = useState(false)
@@ -61,9 +67,19 @@ export default function NewProductPage() {
     }
   }
 
+  const quillModules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'align': [] }],
+      ['link', 'clean']
+    ]
+  }
+
   return (
-    <div style={{ maxWidth: '600px', background: 'white', padding: '2rem', borderRadius: '8px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-      <h1 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>Thêm sản phẩm mới</h1>
+    <div style={{ maxWidth: '800px', background: 'white', padding: '2rem', borderRadius: '8px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+      <h1 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', fontFamily: 'Playfair Display' }}>Thêm sản phẩm mới</h1>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         <div>
           <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Tên sản phẩm *</label>
@@ -73,13 +89,19 @@ export default function NewProductPage() {
           <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Giá (VNĐ) *</label>
           <input required type="number" value={price} onChange={(e) => setPrice(e.target.value)} style={{ width: '100%', padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }} />
         </div>
+        
+        {/* Category Select */}
         <div>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Danh mục</label>
-          <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} style={{ width: '100%', padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }} />
+          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Danh mục *</label>
+          <select required value={category} onChange={(e) => setCategory(e.target.value)} style={{ width: '100%', padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px', background: 'white' }}>
+            {PREDEFINED_CATEGORIES.map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
+          </select>
         </div>
         
         {/* Upload Image Section */}
-        <div style={{ padding: '1rem', border: '1px dashed #ccc', borderRadius: '4px', backgroundColor: '#fafafa' }}>
+        <div style={{ padding: '1.5rem', border: '1px dashed #ccc', borderRadius: '4px', backgroundColor: '#fafafa' }}>
           <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Ảnh sản phẩm</label>
           <input 
             type="file" 
@@ -90,7 +112,7 @@ export default function NewProductPage() {
           />
           {isUploading && <p style={{ color: '#666', fontSize: '0.9rem' }}>Đang tải ảnh lên...</p>}
           
-          <div style={{ marginTop: '0.5rem' }}>
+          <div style={{ marginTop: '1rem' }}>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', color: '#555' }}>Hoặc dán Link ảnh trực tiếp vào đây:</label>
             <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="https://..." style={{ width: '100%', padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }} />
           </div>
@@ -98,17 +120,26 @@ export default function NewProductPage() {
           {imageUrl && (
             <div style={{ marginTop: '1rem' }}>
               <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>Ảnh xem trước:</p>
-              <img src={imageUrl} alt="Preview" style={{ maxWidth: '100px', maxHeight: '100px', objectFit: 'cover', borderRadius: '4px' }} />
+              <img src={imageUrl} alt="Preview" style={{ maxWidth: '150px', maxHeight: '150px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #eee' }} />
             </div>
           )}
         </div>
 
-        <div>
+        {/* Rich Text Editor */}
+        <div style={{ marginBottom: '2rem' }}>
           <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Mô tả chi tiết</label>
-          <textarea rows={5} value={description} onChange={(e) => setDescription(e.target.value)} style={{ width: '100%', padding: '0.8rem', border: '1px solid #ddd', borderRadius: '4px' }} />
+          <div style={{ background: 'white' }}>
+            <ReactQuill 
+              theme="snow" 
+              value={description} 
+              onChange={setDescription} 
+              modules={quillModules}
+              style={{ height: '300px', marginBottom: '40px' }}
+            />
+          </div>
         </div>
         
-        <button type="submit" style={{ padding: '1rem', background: '#d5b364', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', marginTop: '0.5rem', fontSize: '1.1rem' }}>
+        <button type="submit" style={{ padding: '1rem', background: '#B8892A', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
           Lưu Sản Phẩm
         </button>
       </form>

@@ -11,7 +11,11 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
     let all = await prisma.product.findMany({ orderBy: { createdAt: 'desc' } })
     if (slug !== 'all') {
       const q = slug.toLowerCase().replace(/-/g, ' ')
-      all = all.filter(p => p.category?.toLowerCase().includes(q) || p.title.toLowerCase().includes(q))
+      all = all.filter(p => {
+        const cat = p.category ? p.category.toLowerCase().replace(/đ/g, 'd').normalize('NFD').replace(/[\u0300-\u036f]/g, '') : ''
+        const tit = p.title.toLowerCase().replace(/đ/g, 'd').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        return cat.includes(q) || tit.includes(q)
+      })
     }
     products = all
   } catch {
@@ -43,16 +47,26 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
 
       {/* Filter tabs */}
       <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '32px 48px 0', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-        {['Tất Cả', 'Nhẫn', 'Dây Chuyền', 'Bông Tai', 'Vòng Tay', 'Trang Sức Cưới'].map((f, i) => (
-          <button key={f} className={i === 0 ? 'btn-g' : 'btn-o'} style={{
-            background: i === 0 ? 'var(--gold)' : 'transparent',
-            color: i === 0 ? '#FFF' : 'var(--text-muted)',
-            border: i === 0 ? 'none' : '1px solid var(--border)',
-            font: "600 10.5px/1 'Be Vietnam Pro',sans-serif",
-            letterSpacing: '3px', textTransform: 'uppercase', padding: '12px 28px',
-            borderRadius: '2px'
-          }}>{f}</button>
-        ))}
+        {['Tất Cả', 'Nhẫn', 'Dây Chuyền', 'Bông Tai', 'Vòng Tay', 'Trang Sức Cưới'].map((f) => {
+          // Determine the target slug
+          let targetSlug = 'all'
+          if (f !== 'Tất Cả') {
+            targetSlug = f.toLowerCase().replace(/đ/g, 'd').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-')
+          }
+          
+          const isActive = slug === targetSlug
+
+          return (
+            <a href={`/collections/${targetSlug}`} key={f} className={isActive ? 'btn-g' : 'btn-o'} style={{
+              background: isActive ? 'var(--gold)' : 'transparent',
+              color: isActive ? '#FFF' : 'var(--text-muted)',
+              border: isActive ? 'none' : '1px solid var(--border)',
+              font: "600 10.5px/1 'Be Vietnam Pro',sans-serif",
+              letterSpacing: '3px', textTransform: 'uppercase', padding: '12px 28px',
+              borderRadius: '2px', textDecoration: 'none'
+            }}>{f}</a>
+          )
+        })}
       </div>
 
       {/* Products grid */}
