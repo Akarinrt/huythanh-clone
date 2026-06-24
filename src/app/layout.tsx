@@ -20,8 +20,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Huy Thanh Jewelry Clone",
-  description: "Trang web mua bán trang sức cao cấp",
+  title: "Bảo Nhiên - Luxury Jewelry & Platinum",
+  description: "Trang sức cao cấp Bảo Nhiên - Luxury Jewelry & Platinum. Nhẫn cầu hôn, trang sức cưới, vàng 24K.",
 };
 
 export default function RootLayout({
