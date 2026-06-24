@@ -2,10 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import dynamic from 'next/dynamic'
-import 'react-quill/dist/quill.snow.css'
+import TipTapEditor from '@/components/admin/TipTapEditor'
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 const PREDEFINED_CATEGORIES = ['Nhẫn', 'Dây Chuyền', 'Bông Tai', 'Vòng Tay', 'Trang Sức Cưới']
 
 export default function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
@@ -68,16 +66,6 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
     }
   }
 
-  const quillModules = {
-    toolbar: [
-      [{ 'header': [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'align': [] }],
-      ['link', 'clean']
-    ]
-  }
-
   if (isLoading) return <div style={{ padding: '3rem', textAlign: 'center' }}>Đang tải...</div>
 
   return (
@@ -121,13 +109,7 @@ export default function EditProductPage({ params }: { params: Promise<{ id: stri
         <div style={{ marginBottom: '2rem' }}>
           <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>Mô tả chi tiết</label>
           <div style={{ background: 'white' }}>
-            <ReactQuill 
-              theme="snow" 
-              value={description} 
-              onChange={setDescription} 
-              modules={quillModules}
-              style={{ height: '300px', marginBottom: '40px' }}
-            />
+            <TipTapEditor value={description} onChange={setDescription} />
           </div>
         </div>
 
