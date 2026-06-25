@@ -2,6 +2,15 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import nodemailer from 'nodemailer'
 
+function escHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json()
@@ -34,30 +43,34 @@ export async function POST(request: Request) {
 
     // Send email notification
     try {
-      if (process.env.SMTP_PASSWORD) {
+      const smtpUser = process.env.SMTP_USER
+      const smtpPassword = process.env.SMTP_PASSWORD
+      const notifyEmail = process.env.NOTIFY_EMAIL
+
+      if (smtpPassword && smtpUser && notifyEmail) {
         const transporter = nodemailer.createTransport({
           service: 'gmail',
           auth: {
-            user: 'Daothanhthuy15@gmail.com',
-            pass: process.env.SMTP_PASSWORD
+            user: smtpUser,
+            pass: smtpPassword
           }
         })
 
         const mailOptions = {
-          from: '"Bảo Nhiên Bot" <Daothanhthuy15@gmail.com>',
-          to: 'Daothanhthuy15@gmail.com',
-          subject: `[ĐƠN HÀNG MỚI] Từ khách hàng ${customerName}`,
+          from: `"Bảo Nhiên Bot" <${smtpUser}>`,
+          to: notifyEmail,
+          subject: `[ĐƠN HÀNG MỚI] Từ khách hàng ${escHtml(customerName)}`,
           html: `
             <h2>CÓ ĐƠN ĐẶT HÀNG MỚI!</h2>
-            <p><strong>Khách hàng:</strong> ${customerName}</p>
-            <p><strong>Số điện thoại:</strong> ${phone}</p>
-            <p><strong>Địa chỉ:</strong> ${address}</p>
+            <p><strong>Khách hàng:</strong> ${escHtml(customerName)}</p>
+            <p><strong>Số điện thoại:</strong> ${escHtml(phone)}</p>
+            <p><strong>Địa chỉ:</strong> ${escHtml(address)}</p>
             <p><strong>Ngày giờ nhận:</strong> ${deliveryDate ? new Date(deliveryDate).toLocaleString('vi-VN') : 'Không chọn'}</p>
-            <p><strong>Ghi chú:</strong> ${note || 'Không có'}</p>
+            <p><strong>Ghi chú:</strong> ${note ? escHtml(note) : 'Không có'}</p>
             <hr/>
             <h3>Sản phẩm:</h3>
             <ul>
-              ${items.map((i: any) => `<li>${i.title} ${i.size ? `(Size: ${i.size})` : ''} x ${i.quantity} = ${(i.price * i.quantity).toLocaleString('vi-VN')} đ</li>`).join('')}
+              ${items.map((i: any) => `<li>${escHtml(i.title)} ${i.size ? `(Size: ${escHtml(i.size)})` : ''} x ${i.quantity} = ${(i.price * i.quantity).toLocaleString('vi-VN')} đ</li>`).join('')}
             </ul>
             <h3>Tổng tiền: ${parseFloat(totalPrice).toLocaleString('vi-VN')} đ</h3>
           `
@@ -65,7 +78,7 @@ export async function POST(request: Request) {
 
         await transporter.sendMail(mailOptions)
       } else {
-        console.warn('SMTP_PASSWORD is not set. Email not sent.')
+        console.warn('SMTP_USER, SMTP_PASSWORD hoặc NOTIFY_EMAIL chưa được cấu hình. Email không được gửi.')
       }
     } catch (mailError) {
       console.error('Error sending email:', mailError)

@@ -31,13 +31,16 @@ export const useCartStore = create<CartStore>()(
         const existingItemIndex = state.items.findIndex(
           (i) => i.id === item.id && i.size === item.size
         )
-        
+
         if (existingItemIndex > -1) {
           const newItems = [...state.items]
-          newItems[existingItemIndex].quantity += item.quantity
+          newItems[existingItemIndex] = {
+            ...newItems[existingItemIndex],
+            quantity: newItems[existingItemIndex].quantity + item.quantity
+          }
           return { items: newItems }
         }
-        
+
         return { items: [...state.items, item] }
       }),
       removeItem: (id, size) => set((state) => ({

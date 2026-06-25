@@ -16,6 +16,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, message: 'Không tìm thấy file' }, { status: 400 })
     }
 
+    // Kiểm tra loại file
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+    if (!allowedTypes.includes(file.type)) {
+      return NextResponse.json({ success: false, message: 'Chỉ chấp nhận ảnh JPEG, PNG, WebP hoặc GIF' }, { status: 400 })
+    }
+
     // Kiểm tra kích thước file (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       return NextResponse.json({ success: false, message: 'File quá lớn, tối đa 5MB' }, { status: 400 })

@@ -1,8 +1,12 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { requireAdmin } from '@/lib/jwt'
 
 // Lấy giá trị setting
 export async function GET(request: Request) {
+  const unauth = await requireAdmin()
+  if (unauth) return unauth
+
   try {
     const { searchParams } = new URL(request.url)
     const id = searchParams.get('id')
@@ -21,6 +25,9 @@ export async function GET(request: Request) {
 
 // Cập nhật giá trị setting
 export async function POST(request: Request) {
+  const unauth = await requireAdmin()
+  if (unauth) return unauth
+
   try {
     const { id, value } = await request.json()
 
