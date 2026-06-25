@@ -32,6 +32,8 @@ model Order {
   phone        String
   address      String
   totalPrice   Float
+  deliveryDate String?
+  note         String?
   status       String      @default("pending")
   createdAt    DateTime    @default(now())
   items        OrderItem[]
@@ -55,4 +57,10 @@ model Banner {
   link      String?
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
+}
+
+model Setting {
+  id        String   @id
+  value     String
+  updatedAt DateTime @updatedAt
 }

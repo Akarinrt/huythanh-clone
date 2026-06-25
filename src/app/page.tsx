@@ -4,16 +4,26 @@ export const dynamic = 'force-dynamic'
 
 export default async function Home() {
   let products: Array<{ id: number; title: string; price: number; imageUrl: string | null; category: string | null }> = []
+  let goldPrice = ''
 
   try {
     const { prisma } = await import('@/lib/prisma')
     products = await prisma.product.findMany({ orderBy: { createdAt: 'desc' }, take: 8 })
+    const setting = await prisma.setting.findUnique({ where: { id: 'gold_price' } })
+    if (setting) goldPrice = setting.value
   } catch {
     // DB not ready yet
   }
 
   return (
     <main style={{ background: 'var(--bg)', minHeight: '100vh' }}>
+      
+      {/* ── GOLD PRICE BANNER ── */}
+      {goldPrice && (
+        <div style={{ background: 'var(--gold)', color: '#FFF', textAlign: 'center', padding: '12px 24px', font: "500 13px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '1px', zIndex: 10, position: 'relative' }}>
+          <span style={{ opacity: 0.9 }}>GIÁ VÀNG HÔM NAY:</span> <strong style={{ fontSize: '15px', marginLeft: '8px' }}>{goldPrice}</strong>
+        </div>
+      )}
 
       {/* ── HERO ── */}
       <section style={{ height: '100vh', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

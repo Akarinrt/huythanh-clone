@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import { Package, ShoppingCart, DollarSign, TrendingUp } from 'lucide-react'
+import GoldPriceEditor from '@/components/admin/GoldPriceEditor'
 
 export const dynamic = 'force-dynamic'
 
@@ -8,6 +9,9 @@ export default async function AdminDashboard() {
   // Fetch some basic stats
   const totalProducts = await prisma.product.count()
   const totalOrders = await prisma.order.count()
+  
+  // Fetch gold price
+  const goldSetting = await prisma.setting.findUnique({ where: { id: 'gold_price' } })
   
   // Get total revenue from all orders
   const orders = await prisma.order.findMany({
@@ -28,6 +32,11 @@ export default async function AdminDashboard() {
       <p style={{ font: "400 14px/1.6 'Be Vietnam Pro',sans-serif", color: 'var(--text-muted)', marginBottom: '32px' }}>
         Chào mừng bạn đến với trang quản trị. Dưới đây là tóm tắt hoạt động của cửa hàng.
       </p>
+
+      {/* Gold Price Editor */}
+      <div style={{ marginBottom: '32px' }}>
+        <GoldPriceEditor initialPrice={goldSetting?.value || ''} />
+      </div>
 
       {/* Stats Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px', marginBottom: '48px' }}>

@@ -19,9 +19,14 @@ export default function CheckoutPage() {
   const handleCheckout = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = e.currentTarget
-    const customerName = (form.querySelector('input[type="text"]') as HTMLInputElement)?.value || ''
-    const phone = (form.querySelector('input[type="tel"]') as HTMLInputElement)?.value || ''
-    const address = (form.querySelectorAll('input[type="text"]')[1] as HTMLInputElement)?.value || ''
+    
+    // Extract values using name attributes
+    const formData = new FormData(form)
+    const customerName = formData.get('customerName') as string
+    const phone = formData.get('phone') as string
+    const address = formData.get('address') as string
+    const deliveryDate = formData.get('deliveryDate') as string
+    const note = formData.get('note') as string
 
     try {
       const res = await fetch('/api/orders', {
@@ -31,6 +36,8 @@ export default function CheckoutPage() {
           customerName,
           phone,
           address,
+          deliveryDate,
+          note,
           totalPrice,
           items
         })
@@ -56,7 +63,7 @@ export default function CheckoutPage() {
           <CheckCircle size={72} color="var(--gold)" style={{ margin: '0 auto 24px' }} />
           <h1 style={{ font: "300 36px/1.2 'Playfair Display',serif", color: 'var(--text)', marginBottom: '16px' }}>Đặt hàng thành công!</h1>
           <p style={{ font: "400 15px/1.8 'Be Vietnam Pro',sans-serif", color: 'var(--text-muted)', marginBottom: '36px' }}>
-            Cảm ơn bạn đã mua sắm tại Bảo Nhiên. Đơn hàng của bạn đang được xử lý và chúng tôi sẽ liên hệ trong thời gian sớm nhất.
+            Cảm ơn quý khách chúng tôi sẽ liên hệ trực tiếp sau.
           </p>
           <Link href="/" className="btn-g" style={{ display: 'inline-block', padding: '16px 40px', background: 'var(--gold)', color: '#FFF', font: "600 12px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '2px', textTransform: 'uppercase' }}>Tiếp tục mua sắm</Link>
         </div>
@@ -81,23 +88,28 @@ export default function CheckoutPage() {
         
         {/* Form */}
         <div>
-          <h2 style={{ font: "300 32px/1.2 'Playfair Display',serif", color: 'var(--text)', marginBottom: '32px' }}>Thông tin giao hàng</h2>
-          <form onSubmit={handleCheckout} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div>
-              <label style={{ display: 'block', marginBottom: '8px', font: "500 13px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text)' }}>Họ và tên</label>
-              <input required type="text" style={{ width: '100%', padding: '16px', background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text)', font: "400 14px/1 'Be Vietnam Pro',sans-serif", outline: 'none' }} placeholder="Nhập họ và tên..." />
-            </div>
-            <div>
-              <label style={{ display: 'block', marginBottom: '8px', font: "500 13px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text)' }}>Số điện thoại</label>
-              <input required type="tel" style={{ width: '100%', padding: '16px', background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text)', font: "400 14px/1 'Be Vietnam Pro',sans-serif", outline: 'none' }} placeholder="Nhập số điện thoại..." />
-            </div>
-            <div>
-              <label style={{ display: 'block', marginBottom: '8px', font: "500 13px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text)' }}>Địa chỉ nhận hàng</label>
-              <input required type="text" style={{ width: '100%', padding: '16px', background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text)', font: "400 14px/1 'Be Vietnam Pro',sans-serif", outline: 'none' }} placeholder="Nhập địa chỉ chi tiết..." />
-            </div>
+          <h2 style={{ font: "500 16px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text)', marginBottom: '24px', textTransform: 'uppercase', letterSpacing: '1px' }}>THÔNG TIN KHÁCH HÀNG</h2>
+          <form onSubmit={handleCheckout} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <input required name="customerName" type="text" style={{ width: '100%', padding: '16px', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', font: "400 14px/1 'Be Vietnam Pro',sans-serif", outline: 'none' }} placeholder="Họ và tên" />
+            
+            <input required name="phone" type="tel" style={{ width: '100%', padding: '16px', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', font: "400 14px/1 'Be Vietnam Pro',sans-serif", outline: 'none' }} placeholder="Số điện thoại" />
+            
+            <input required name="address" type="text" style={{ width: '100%', padding: '16px', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', font: "400 14px/1 'Be Vietnam Pro',sans-serif", outline: 'none' }} placeholder="Địa chỉ" />
+            
+            <input required name="deliveryDate" type="datetime-local" style={{ width: '100%', padding: '16px', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', font: "400 14px/1 'Be Vietnam Pro',sans-serif", outline: 'none' }} placeholder="Chọn ngày và giờ" />
+            
+            <textarea name="note" rows={4} style={{ width: '100%', padding: '16px', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', font: "400 14px/1 'Be Vietnam Pro',sans-serif", outline: 'none', resize: 'vertical' }} placeholder="Ghi chú"></textarea>
+
+            <label style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', marginTop: '16px', cursor: 'pointer' }}>
+              <input required type="checkbox" style={{ marginTop: '4px' }} />
+              <span style={{ font: "400 13px/1.5 'Be Vietnam Pro',sans-serif", color: 'var(--text-muted)' }}>
+                Tôi đồng ý cung cấp các thông tin cá nhân theo <a href="#" style={{textDecoration: 'underline'}}>Chính sách bảo hành</a> và <a href="#" style={{textDecoration: 'underline'}}>Chính sách bảo mật</a>.
+              </span>
+            </label>
+            
             <div style={{ marginTop: '16px' }}>
-              <button type="submit" className="btn-g" style={{ width: '100%', padding: '20px', background: 'var(--gold)', color: '#FFF', font: "600 13px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '2px', textTransform: 'uppercase', border: 'none' }}>
-                Xác nhận đặt hàng
+              <button type="submit" className="btn-g" style={{ width: '100%', padding: '20px', background: '#3A4254', color: '#FFF', font: "400 15px/1 'Be Vietnam Pro',sans-serif", border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+                Xác nhận đặt lịch
               </button>
             </div>
           </form>
