@@ -63,7 +63,7 @@ export default async function Home() {
 
       {/* ── HERO ── */}
       <section style={{ height: '100vh', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('https://cdn.huythanhjewelry.vn/storage/photos/shares/article/Banner%20website%202026/body%20homepage%20-%20ndino.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F5F3EF' }} />
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('https://cdn.huythanhjewelry.vn/storage/photos/shares/article/Banner%20website%202026/body%20homepage%20-%20ndino.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed', backgroundColor: '#F5F3EF' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(26,26,24,0.7) 0%, rgba(26,26,24,0.3) 50%, rgba(26,26,24,0.8) 100%)' }} />
         <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', maxWidth: '840px' }}>
           <div style={{ font: "600 11px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '7px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: '30px', animation: 'fadeUp 0.8s 0.2s both' }}>── Tinh Hoa Trang Sức ──</div>
