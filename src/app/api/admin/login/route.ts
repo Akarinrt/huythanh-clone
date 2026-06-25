@@ -11,18 +11,33 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
     }
 
-    const admin = await prisma.user.findUnique({
-      where: { username }
-    })
+    const userCount = await prisma.user.count()
 
-    if (!admin) {
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
-    }
+    let admin
 
-    const isMatch = await bcrypt.compare(password, admin.password)
+    if (userCount === 0) {
+      // First time setup
+      const hashedPassword = await bcrypt.hash(password, 10)
+      admin = await prisma.user.create({
+        data: {
+          username,
+          password: hashedPassword
+        }
+      })
+    } else {
+      admin = await prisma.user.findUnique({
+        where: { username }
+      })
 
-    if (!isMatch) {
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+      if (!admin) {
+        return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+      }
+
+      const isMatch = await bcrypt.compare(password, admin.password)
+
+      if (!isMatch) {
+        return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
+      }
     }
 
     const token = await signToken({ username: admin.username, id: admin.id })
