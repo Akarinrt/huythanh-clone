@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
+import DeleteOrderButton from '@/components/admin/DeleteOrderButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -45,16 +46,19 @@ export default async function OrdersPage() {
                     {new Date(order.createdAt).toLocaleString('vi-VN')}
                   </span>
                 </div>
-                <span style={{
-                  padding: '0.3rem 0.8rem',
-                  borderRadius: '999px',
-                  fontSize: '0.8rem',
-                  fontWeight: 'bold',
-                  color: 'white',
-                  background: statusColors[order.status] || '#888'
-                }}>
-                  {statusLabels[order.status] || order.status}
-                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <span style={{
+                    padding: '0.3rem 0.8rem',
+                    borderRadius: '999px',
+                    fontSize: '0.8rem',
+                    fontWeight: 'bold',
+                    color: 'white',
+                    background: statusColors[order.status] || '#888'
+                  }}>
+                    {statusLabels[order.status] || order.status}
+                  </span>
+                  <DeleteOrderButton orderId={order.id} />
+                </div>
               </div>
 
               <div style={{ padding: '1.25rem 1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
