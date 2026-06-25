@@ -10,9 +10,23 @@ export default async function Home() {
     const { prisma } = await import('@/lib/prisma')
     products = await prisma.product.findMany({ orderBy: { createdAt: 'desc' }, take: 8 })
     const setting = await prisma.setting.findUnique({ where: { id: 'gold_price' } })
-    if (setting) goldPrice = setting.value
+    if (setting) {
+      goldPrice = setting.value
+    }
   } catch {
     // DB not ready yet
+  }
+
+  let formattedGoldPrice = goldPrice
+  if (goldPrice) {
+    const numeric = goldPrice.replace(/\D/g, '')
+    if (numeric) {
+      formattedGoldPrice = parseInt(numeric).toLocaleString('vi-VN') + ' VNĐ'
+    } else {
+      if (!goldPrice.toLowerCase().includes('vnđ') && !goldPrice.toLowerCase().includes('vnd')) {
+        formattedGoldPrice = goldPrice + ' VNĐ'
+      }
+    }
   }
 
   return (
@@ -20,8 +34,29 @@ export default async function Home() {
       
       {/* ── GOLD PRICE BANNER ── */}
       {goldPrice && (
-        <div style={{ background: 'var(--gold)', color: '#FFF', textAlign: 'center', padding: '12px 24px', font: "500 13px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '1px', zIndex: 10, position: 'relative' }}>
-          <span style={{ opacity: 0.9 }}>GIÁ VÀNG HÔM NAY:</span> <strong style={{ fontSize: '15px', marginLeft: '8px' }}>{goldPrice}</strong>
+        <div style={{ 
+          background: 'linear-gradient(90deg, #1A1A18 0%, #2A2A26 50%, #1A1A18 100%)', 
+          color: '#D4A84B', 
+          textAlign: 'center', 
+          padding: '12px 24px', 
+          font: "500 13px/1 'Be Vietnam Pro',sans-serif", 
+          letterSpacing: '2px', 
+          zIndex: 10, 
+          position: 'relative',
+          borderBottom: '1px solid rgba(212, 168, 75, 0.2)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '12px'
+        }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 3"/></svg>
+          <span style={{ opacity: 0.9, textTransform: 'uppercase' }}>Cập nhật giá vàng hôm nay:</span> 
+          <strong style={{ 
+            fontSize: '15px', 
+            color: '#FFF', 
+            textShadow: '0 0 10px rgba(212, 168, 75, 0.4)',
+            letterSpacing: '1px'
+          }}>{formattedGoldPrice}</strong>
         </div>
       )}
 
