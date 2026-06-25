@@ -4,44 +4,54 @@ import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 
 export default function HeroBanner() {
-  const [scrollY, setScrollY] = useState(0)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleMouseMove = (e: MouseEvent) => {
       if (!sectionRef.current) return
-      // Chỉ tính toán khi section còn nằm trong viewport
-      const rect = sectionRef.current.getBoundingClientRect()
-      if (rect.bottom > 0) {
-        setScrollY(window.scrollY)
-      }
+      const { innerWidth, innerHeight } = window
+      
+      // Tính toán vị trí chuột: Normalize từ -1 đến 1
+      const x = (e.clientX / innerWidth) * 2 - 1
+      const y = (e.clientY / innerHeight) * 2 - 1
+
+      setMousePos({ x, y })
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
   return (
-    <section ref={sectionRef} style={{ height: '100vh', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', perspective: '1000px' }}>
+    <section ref={sectionRef} style={{ height: '100vh', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       
-      {/* Background Image with Parallax & Tilt */}
+      {/* Background Image with Mouse Parallax */}
       <div style={{ 
         position: 'absolute', 
-        top: '-10%', left: '-10%', right: '-10%', bottom: '-10%', // Phóng to ra một chút để có không gian di chuyển
+        inset: '-5%', // Chừa không gian để dịch chuyển
         backgroundImage: "url('https://cdn.huythanhjewelry.vn/storage/photos/shares/article/Banner%20website%202026/body%20homepage%20-%20ndino.jpg')", 
         backgroundSize: 'cover', 
         backgroundPosition: 'center', 
         backgroundColor: '#F5F3EF',
-        transform: `translateY(${scrollY * 0.3}px) rotateX(${scrollY * 0.03}deg)`,
-        transformOrigin: 'top center',
+        transform: `translate3d(${mousePos.x * -15}px, ${mousePos.y * -15}px, 0) scale(1.05)`,
+        transition: 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         willChange: 'transform'
       }} />
 
       {/* Overlay */}
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(26,26,24,0.7) 0%, rgba(26,26,24,0.3) 50%, rgba(26,26,24,0.8) 100%)' }} />
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(26,26,24,0.7) 0%, rgba(26,26,24,0.3) 50%, rgba(26,26,24,0.8) 100%)', pointerEvents: 'none' }} />
       
-      {/* Content */}
-      <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', maxWidth: '840px', transform: `translateY(${scrollY * -0.1}px)` }}>
+      {/* Content with subtle opposite Parallax */}
+      <div style={{ 
+        position: 'relative', 
+        zIndex: 2, 
+        textAlign: 'center', 
+        padding: '0 24px', 
+        maxWidth: '840px',
+        transform: `translate3d(${mousePos.x * 10}px, ${mousePos.y * 10}px, 0)`,
+        transition: 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+      }}>
         <div style={{ font: "600 11px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '7px', textTransform: 'uppercase', color: '#D4A84B', marginBottom: '30px', animation: 'fadeUp 0.8s 0.2s both' }}>── Tinh Hoa Trang Sức ──</div>
         <div style={{ font: "300 italic 84px/1.05 'Playfair Display',serif", color: '#FFFFFF', animation: 'fadeUp 0.9s 0.4s both' }}>Vẻ Đẹp</div>
         <span className="shimmer-gold" style={{ font: "400 92px/1.05 'Playfair Display',serif", marginBottom: '30px', animation: 'fadeUp 0.9s 0.55s both', display: 'inline-block' }}>Vĩnh Cửu</span>
@@ -54,7 +64,7 @@ export default function HeroBanner() {
       </div>
 
       {/* Scroll Indicator */}
-      <div style={{ position: 'absolute', bottom: '40px', left: '50%', transform: `translateX(-50%) translateY(${scrollY * -0.2}px)`, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', animation: 'fadeIn 2s 1.3s both' }}>
+      <div style={{ position: 'absolute', bottom: '40px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', animation: 'fadeIn 2s 1.3s both' }}>
         <div style={{ font: "500 10px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '3px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)' }}>Scroll</div>
         <div style={{ width: '1px', height: '44px', background: 'linear-gradient(to bottom, rgba(255,255,255,0.6), transparent)' }} />
       </div>
