@@ -50,36 +50,36 @@ export default function ProductsPage() {
       </div>
 
       {isLoading ? (
-        <p style={{ textAlign: 'center', padding: '3rem', color: '#666' }}>Đang tải...</p>
+        <p style={{ textAlign: 'center', padding: '3rem', color: 'var(--admin-text-muted)' }}>Đang tải...</p>
       ) : (
-        <table style={{ width: '100%', borderCollapse: 'collapse', background: 'white', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', borderRadius: '8px', overflow: 'hidden' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', background: 'var(--admin-card-bg)', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', borderRadius: '8px', overflow: 'hidden' }}>
           <thead>
-            <tr style={{ background: '#f5f5f5', textAlign: 'left' }}>
-              <th style={{ padding: '1rem', borderBottom: '1px solid #eee', width: '60px' }}>Ảnh</th>
-              <th style={{ padding: '1rem', borderBottom: '1px solid #eee' }}>Tên sản phẩm</th>
-              <th style={{ padding: '1rem', borderBottom: '1px solid #eee' }}>Giá</th>
-              <th style={{ padding: '1rem', borderBottom: '1px solid #eee' }}>Danh mục</th>
-              <th style={{ padding: '1rem', borderBottom: '1px solid #eee', textAlign: 'center' }}>Hành động</th>
+            <tr style={{ background: 'var(--admin-card-header)', textAlign: 'left' }}>
+              <th style={{ padding: '1rem', borderBottom: '1px solid var(--admin-border)', width: '60px' }}>Ảnh</th>
+              <th style={{ padding: '1rem', borderBottom: '1px solid var(--admin-border)' }}>Tên sản phẩm</th>
+              <th style={{ padding: '1rem', borderBottom: '1px solid var(--admin-border)' }}>Giá</th>
+              <th style={{ padding: '1rem', borderBottom: '1px solid var(--admin-border)' }}>Danh mục</th>
+              <th style={{ padding: '1rem', borderBottom: '1px solid var(--admin-border)', textAlign: 'center' }}>Hành động</th>
             </tr>
           </thead>
           <tbody>
             {products.length === 0 ? (
               <tr>
-                <td colSpan={5} style={{ padding: '3rem', textAlign: 'center', color: '#888' }}>Chưa có sản phẩm nào.</td>
+                <td colSpan={5} style={{ padding: '3rem', textAlign: 'center', color: 'var(--admin-text-muted)' }}>Chưa có sản phẩm nào.</td>
               </tr>
             ) : (
               products.map(product => (
-                <tr key={product.id} style={{ borderBottom: '1px solid #eee' }}>
+                <tr key={product.id} style={{ borderBottom: '1px solid var(--admin-border)' }}>
                   <td style={{ padding: '0.75rem 1rem' }}>
                     {product.imageUrl ? (
                       <img src={product.imageUrl} alt={product.title} style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '4px' }} />
                     ) : (
-                      <div style={{ width: '48px', height: '48px', background: '#f0f0f0', borderRadius: '4px' }} />
+                      <div style={{ width: '48px', height: '48px', background: 'var(--admin-card-header)', borderRadius: '4px' }} />
                     )}
                   </td>
                   <td style={{ padding: '0.75rem 1rem', fontWeight: '500' }}>{product.title}</td>
                   <td style={{ padding: '0.75rem 1rem', color: '#b8962e' }}>{product.price.toLocaleString('vi-VN')} đ</td>
-                  <td style={{ padding: '0.75rem 1rem', color: '#666' }}>{product.category || '-'}</td>
+                  <td style={{ padding: '0.75rem 1rem', color: 'var(--admin-text-muted)' }}>{product.category || '-'}</td>
                   <td style={{ padding: '0.75rem 1rem', textAlign: 'center' }}>
                     <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
                       <Link

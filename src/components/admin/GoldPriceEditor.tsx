@@ -29,10 +29,10 @@ export default function GoldPriceEditor({ initialPrice }: { initialPrice: string
   }
 
   return (
-    <div style={{ background: '#FFFFFF', padding: '24px', borderRadius: '8px', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+    <div style={{ background: 'var(--admin-card-bg)', padding: '24px', borderRadius: '8px', border: '1px solid var(--admin-border)', display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <div>
-        <h3 style={{ font: "600 16px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text)', marginBottom: '8px' }}>Cập nhật Giá Vàng Hôm Nay</h3>
-        <p style={{ font: "400 13px/1.5 'Be Vietnam Pro',sans-serif", color: 'var(--text-muted)' }}>Giá này sẽ được hiển thị nổi bật ngoài trang chủ để khách hàng dễ dàng theo dõi.</p>
+        <h3 style={{ font: "600 16px/1 'Be Vietnam Pro',sans-serif", color: 'var(--admin-text)', marginBottom: '8px' }}>Cập nhật Giá Vàng Hôm Nay</h3>
+        <p style={{ font: "400 13px/1.5 'Be Vietnam Pro',sans-serif", color: 'var(--admin-text-muted)' }}>Giá này sẽ được hiển thị nổi bật ngoài trang chủ để khách hàng dễ dàng theo dõi.</p>
       </div>
       
       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
@@ -41,7 +41,7 @@ export default function GoldPriceEditor({ initialPrice }: { initialPrice: string
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           placeholder="VD: 8.500.000 VNĐ / Lượng"
-          style={{ flex: 1, padding: '12px 16px', border: '1px solid var(--border)', borderRadius: '4px', font: "400 14px/1 'Be Vietnam Pro',sans-serif", outline: 'none' }}
+          style={{ flex: 1, padding: '12px 16px', border: '1px solid var(--admin-border)', background: 'transparent', color: 'var(--admin-text)', borderRadius: '4px', font: "400 14px/1 'Be Vietnam Pro',sans-serif", outline: 'none' }}
         />
         <button 
           onClick={handleSave}

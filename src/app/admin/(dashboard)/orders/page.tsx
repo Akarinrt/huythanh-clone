@@ -31,18 +31,18 @@ export default async function OrdersPage() {
       <h1 style={{ fontSize: '2rem', marginBottom: '2rem' }}>Quản lý Đơn hàng</h1>
 
       {orders.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '4rem', background: 'white', borderRadius: '8px', color: '#888' }}>
+        <div style={{ textAlign: 'center', padding: '4rem', background: 'var(--admin-card-bg)', borderRadius: '8px', color: 'var(--admin-text-muted)' }}>
           <p style={{ fontSize: '1.1rem' }}>Chưa có đơn hàng nào.</p>
           <Link href="/" style={{ color: '#d5b364', marginTop: '1rem', display: 'inline-block' }}>Xem trang chủ</Link>
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           {orders.map(order => (
-            <div key={order.id} style={{ background: 'white', borderRadius: '8px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.25rem 1.5rem', borderBottom: '1px solid #f0f0f0', background: '#fafafa' }}>
+            <div key={order.id} style={{ background: 'var(--admin-card-bg)', borderRadius: '8px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--admin-border)', background: 'var(--admin-card-header)' }}>
                 <div>
                   <span style={{ fontWeight: 'bold', fontSize: '1rem' }}>Đơn #{order.id}</span>
-                  <span style={{ color: '#888', fontSize: '0.85rem', marginLeft: '1rem' }}>
+                  <span style={{ color: 'var(--admin-text-muted)', fontSize: '0.85rem', marginLeft: '1rem' }}>
                     {new Date(order.createdAt).toLocaleString('vi-VN')}
                   </span>
                 </div>
@@ -71,7 +71,7 @@ export default async function OrdersPage() {
                 <div>
                   <p style={{ fontWeight: '600', marginBottom: '0.5rem' }}>Sản phẩm ({order.items.length})</p>
                   {order.items.map(item => (
-                    <p key={item.id} style={{ fontSize: '0.9rem', color: '#555' }}>
+                    <p key={item.id} style={{ fontSize: '0.9rem', color: 'var(--admin-text)' }}>
                       {item.title} {item.size ? `(Size ${item.size})` : ''} × {item.quantity} — {(item.price * item.quantity).toLocaleString('vi-VN')} đ
                     </p>
                   ))}

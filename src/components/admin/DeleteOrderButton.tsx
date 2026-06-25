@@ -37,7 +37,7 @@ export default function DeleteOrderButton({ orderId }: { orderId: number }) {
       onClick={handleDelete}
       disabled={isDeleting}
       style={{
-        background: '#fff',
+        background: 'var(--admin-card-bg)',
         color: '#e55',
         border: '1px solid #e55',
         padding: '0.4rem 1rem',

@@ -17,6 +17,29 @@
   --shadow: 0 2px 20px rgba(0,0,0,0.06);
 }
 
+/* ══════════════ ADMIN CSS VARIABLES ══════════════ */
+.admin-wrapper[data-theme="light"] {
+  --admin-bg: #FAFAF8;
+  --admin-sidebar-bg: #FFFFFF;
+  --admin-card-bg: #FFFFFF;
+  --admin-card-header: #F5F3EF;
+  --admin-text: #1A1A18;
+  --admin-text-muted: #6B6860;
+  --admin-border: rgba(184, 137, 42, 0.15);
+  --admin-hover: rgba(184, 137, 42, 0.05);
+}
+
+.admin-wrapper[data-theme="dark"] {
+  --admin-bg: #1A1A18;
+  --admin-sidebar-bg: #1A1A18;
+  --admin-card-bg: #22221F;
+  --admin-card-header: #2A2A26;
+  --admin-text: #FFFFFF;
+  --admin-text-muted: #A8A49C;
+  --admin-border: rgba(212, 168, 75, 0.15);
+  --admin-hover: rgba(212, 168, 75, 0.1);
+}
+
 /* ══════════════ RESET ══════════════ */
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
