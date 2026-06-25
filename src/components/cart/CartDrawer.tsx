@@ -136,7 +136,7 @@ export default function CartDrawer() {
               style={{ display: 'block', width: '100%', padding: '18px', background: 'var(--gold)', color: '#FFF', font: "600 13px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '2px', textTransform: 'uppercase', textAlign: 'center' }}
               onClick={closeCart}
             >
-              Tiến hành thanh toán
+              Tiến hành đặt lịch
             </Link>
           </div>
         )}
