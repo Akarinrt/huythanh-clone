@@ -43,7 +43,7 @@ export default function AdminLogin() {
       }}>
         {/* Brand Name */}
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <h1 style={{ font: "400 32px/1.2 'Playfair Display',serif", color: '#111', marginBottom: '8px' }}>Bảo Thanh</h1>
+          <h1 style={{ font: "400 32px/1.2 'Playfair Display',serif", color: '#111', marginBottom: '8px' }}>Bảo Nhiên</h1>
           <div style={{ font: "500 11px/1 'Be Vietnam Pro',sans-serif", letterSpacing: '3px', textTransform: 'uppercase', color: '#B8892A' }}>
             Admin Portal
           </div>

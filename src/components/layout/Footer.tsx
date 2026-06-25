@@ -69,7 +69,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div style={{ borderTop: '1px solid var(--border)', paddingTop: '26px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-          <div style={{ font: "400 12px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text-dim)' }}>© 2026 Bảo Thanh. Bản quyền được bảo lưu.</div>
+          <div style={{ font: "400 12px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text-dim)' }}>© 2026 Bảo Nhiên. Bản quyền được bảo lưu.</div>
           <div style={{ font: "400 12px/1 'Be Vietnam Pro',sans-serif", color: 'var(--text-dim)' }}>Thiết kế bởi Bảo Nhiên Studio</div>
         </div>
       </div>
