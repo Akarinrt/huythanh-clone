@@ -38,24 +38,25 @@ export default async function Home() {
           background: 'linear-gradient(90deg, #1A1A18 0%, #2A2A26 50%, #1A1A18 100%)', 
           color: '#D4A84B', 
           textAlign: 'center', 
-          padding: '12px 24px', 
-          font: "500 13px/1 'Be Vietnam Pro',sans-serif", 
-          letterSpacing: '2px', 
+          padding: '18px 32px', 
+          font: "500 16px/1 'Be Vietnam Pro',sans-serif", 
+          letterSpacing: '2.5px', 
           zIndex: 10, 
           position: 'relative',
-          borderBottom: '1px solid rgba(212, 168, 75, 0.2)',
+          borderBottom: '1px solid rgba(212, 168, 75, 0.3)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '12px'
+          gap: '16px'
         }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 3"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 3"/></svg>
           <span style={{ opacity: 0.9, textTransform: 'uppercase' }}>Cập nhật giá vàng hôm nay:</span> 
           <strong style={{ 
-            fontSize: '15px', 
+            fontSize: '26px', 
             color: '#FFF', 
-            textShadow: '0 0 10px rgba(212, 168, 75, 0.4)',
-            letterSpacing: '1px'
+            textShadow: '0 0 16px rgba(212, 168, 75, 0.8)',
+            letterSpacing: '1.5px',
+            fontWeight: '600'
           }}>{formattedGoldPrice}</strong>
         </div>
       )}
