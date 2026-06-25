@@ -46,7 +46,7 @@ export default function Header() {
           borderBottom: '1px solid var(--border)'
         }}
       >
-        <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 48px', display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', height: '80px' }}>
+        <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 48px', display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', height: '110px' }}>
 
           {/* LEFT NAV */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '36px' }}>
@@ -66,7 +66,7 @@ export default function Header() {
             <img
               src="/logo.png"
               alt="Bảo Nhiên Jewelry"
-              style={{ height: '60px', width: 'auto', objectFit: 'contain' }}
+              style={{ height: '90px', width: 'auto', objectFit: 'contain', transition: 'height 0.3s' }}
             />
           </Link>
 
@@ -103,7 +103,7 @@ export default function Header() {
           <div onClick={() => setIsMobileMenuOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 300, animation: 'fadeIn 0.3s both' }} />
           <div style={{ position: 'fixed', top: 0, left: 0, bottom: 0, width: '85%', maxWidth: '340px', background: 'var(--bg-nav)', zIndex: 400, display: 'flex', flexDirection: 'column', animation: 'menuSlide 0.35s cubic-bezier(0.25,0.1,0.25,1) both', borderRight: '1px solid var(--border)', padding: '2rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
-              <img src="/logo.png" alt="Bảo Nhiên" style={{ height: '48px', width: 'auto' }} />
+              <img src="/logo.png" alt="Bảo Nhiên" style={{ height: '72px', width: 'auto' }} />
               <button className="icnb" onClick={() => setIsMobileMenuOpen(false)} style={{ color: 'var(--text)', padding: '4px', display: 'flex' }}>
                 <X size={24} />
               </button>
